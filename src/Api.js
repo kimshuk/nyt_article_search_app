@@ -1,4 +1,5 @@
 import react, {useState, useEffect} from 'react';
+import Card from './Card';
 
 const Articles = () => {
   const [articles, setArticles] = useState({});
@@ -10,8 +11,7 @@ const Articles = () => {
     res
       .json()
       .then(res => {
-        setArticles(res)
-        console.log(res);
+        setArticles(res.response.docs);
       })
       .catch(err => setError(err));
   }
@@ -22,7 +22,9 @@ const Articles = () => {
 
   return (
     <div>
-      <span>{JSON.stringify(articles)}</span>
+      {articles.length && articles.map((article) => {
+        return <Card article={article} />
+      })}
       <hr />
       <span>Has error: {JSON.stringify(hasError)}</span>
     </div>
