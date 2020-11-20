@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react';
+
 
 function App() {
+  const [results, setResults] = useState(null);
+
+  useEffect(() => {
+    fetch('https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=NrG3QAZGRGkGhJudKl5KkPNufko6XTuX')
+      .then(({ results }) => setResults({ article: results }));
+    return () => {
+      console.log(results);
+    }
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
     </div>
   );
 }
