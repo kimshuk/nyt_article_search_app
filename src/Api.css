@@ -1,0 +1,4 @@
+.CardWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}

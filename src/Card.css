@@ -1,6 +1,12 @@
 .Card {
-  width: 150px;
-  height: 200px;
-  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
   border: 1px solid black;
+  margin: 0.25em;
+  width: calc(100%/4 - 0.65em);
+}
+
+.CardContentWrapper {
+  padding: 0 0.5em;
 }
