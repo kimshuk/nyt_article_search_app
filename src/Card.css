@@ -4,7 +4,7 @@
   border-radius: 10px;
   border: 1px solid black;
   margin: 0.25em;
-  width: calc(100%/4 - 0.65em);
+  width: calc(100%/5 - 0.65em);
 }
 
 .CardContentWrapper {

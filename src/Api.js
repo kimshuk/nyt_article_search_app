@@ -1,39 +1,44 @@
 import react, {useState, useEffect} from 'react';
 import Card from './Card';
 import './Api.css';
+import PageClick from './PageClick';
+import SearchBar from './SearchBar';
 
 const Articles = () => {
-  const [articles, setArticles] = useState({});
-  const [hasError, setError] = useState(false);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [searchValue, setSearchValue] = useState();
   const NYT_API_KEY = process.env.REACT_APP_NYT_API_KEY;
+  const nyt_api_url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=`
 
-  async function fetchData() {
+  async function fetchData(currentPage) {
     setLoading(true);
-    const res = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=${NYT_API_KEY}`)
+    const res = await fetch(`${nyt_api_url}${NYT_API_KEY}&page=${currentPage}`)
     res
       .json()
       .then(res => {
+        console.log(res.response.docs);
         setArticles(res.response.docs);
         setLoading(false);
       })
-      .catch(err => setError(err));
   }
 
   useEffect(() =>{
-    fetchData();
+    fetchData(currentPage);
   }, [])
 
+
   return (
-    <div className="CardWrapper">
-      {articles.length && articles.map((article, i) => {
-        return <Card key={i} article={article} />
-      })}
-      <hr />
-      <span>Has error: {JSON.stringify(hasError)}</span>
-    </div>
+    <>
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+      <div className="CardWrapper">
+        {articles.length && articles.map((currentArticle, i) => {
+          return <Card key={i} article={currentArticle} loading={loading} />
+        })}
+      </div>
+      <PageClick currentPage={currentPage} setCurrentPage={setCurrentPage} fetchData={fetchData} />
+    </>
   )
 }
 

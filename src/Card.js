@@ -10,15 +10,17 @@ const Image = styled.div`
   border-radius: 9px 9px 0 0;
 `;
 
-const Card = ({article}) => {
+const Card = ({article, loading}) => {
   // console.log(article);
   const content = article.lead_paragraph;
   const content_url = article.web_url;
   const img_url_prefix = process.env.REACT_APP_NYT_IMG_PREFIX;
   const img_placeholder = "https://via.placeholder.com/150x200?text=Tester";
   const img_url = article.multimedia.length > 0 ? img_url_prefix + article.multimedia[0].url : img_placeholder;
-  console.log(article.multimedia.length);
-  console.log(img_url);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
   return (
       <div className="Card">
