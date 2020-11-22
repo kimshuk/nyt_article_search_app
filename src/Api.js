@@ -3,6 +3,13 @@ import Card from './Card';
 import './Api.css';
 import PageClick from './PageClick';
 import SearchBar from './SearchBar';
+import styled from 'styled-components';
+
+const ApiWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -11,11 +18,11 @@ const Articles = () => {
   const [searchValue, setSearchValue] = useState('');
   const NYT_API_KEY = process.env.REACT_APP_NYT_API_KEY;
   const nyt_api_url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=`
-  const value = searchValue.length ? `&q=${searchValue}` : '';
+  const queryValue = searchValue.length ? `&q=${searchValue}` : '';
 
-  async function fetchData(currentPage, searchValue) {
+  async function fetchData() {
     setLoading(true); 
-    const res = await fetch(`${nyt_api_url}${NYT_API_KEY}&page=${currentPage}${value}`)
+    const res = await fetch(`${nyt_api_url}${NYT_API_KEY}&page=${currentPage}${queryValue}`)
     res
       .json()
       .then(res => {
@@ -26,19 +33,19 @@ const Articles = () => {
 
   useEffect(() =>{
     fetchData(currentPage);
-  }, [searchValue])
+  }, [searchValue, currentPage])
 
 
   return (
-    <>
+    <ApiWrapper>
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
       <div className="CardWrapper">
         {loading ? 'Loading...' : articles.map((currentArticle, i) => {
-          return <Card key={i} article={currentArticle} loading={loading} />
+          return <Card key={currentArticle._id} article={currentArticle} loading={loading} />
         })}
       </div>
       <PageClick currentPage={currentPage} setCurrentPage={setCurrentPage} fetchData={fetchData} />
-    </>
+    </ApiWrapper>
   )
 }
 

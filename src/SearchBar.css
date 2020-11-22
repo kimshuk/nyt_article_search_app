@@ -7,4 +7,18 @@
   border: 1px solid black;
   margin: 0.5em 0.25em;
   padding-left: 0.6em;
+  box-sizing: border-box;
+}
+
+@media only screen and (max-width: 600px) {
+  .SearchInput {
+    width: auto;
+  }
+
+}
+
+@media only screen and (min-width: 601px) {
+  .SearchInput {
+    width: auto;
+  }
 }
