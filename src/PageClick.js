@@ -1,4 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Button = styled.button`
+  margin: 0.5em 0.25em;
+`;
 
 const PageClick = ({currentPage, setCurrentPage, fetchData}) => {
   const pageNum = currentPage;
@@ -9,7 +14,7 @@ const PageClick = ({currentPage, setCurrentPage, fetchData}) => {
   }
 
   return (
-    <button onClick={clickHandler}>불러오기</button>
+    <Button onClick={clickHandler}>더 불러오기</Button>
   )
 }
 

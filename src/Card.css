@@ -10,3 +10,7 @@
 .CardContentWrapper {
   padding: 0 0.5em;
 }
+
+.CardContentText {
+  font-size: 14px;
+}
